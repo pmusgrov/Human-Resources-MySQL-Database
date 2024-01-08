@@ -1,0 +1,96 @@
+<!--Citation for the following code: Date: 08/02/2023 Copied from /OR/ Adapted from /OR/ Based on: Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees Page</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.min.js"
+        integrity="sha512-6i4FxVh0YbXCtxtqrFlG0H6FJRO4YQ5fyFH0JBdAAiqCt6/Q+jHMabMSC8FpESVSJZvnQ52dB2A8OD9SMk7buw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.min.js"
+        integrity="sha512-I5GJQRKGdj2miDs8ComgARfiAQiZJo/43YasH22qtweoG+YRXLTDYegxC/vPgw/ERxRzww/F4l4+8UiMmI20sw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="index" />
+</head>
+<body>
+    <div class="navbar">
+        <div class="title">
+            <img src="./static/img/logo.png">
+        </div>
+         <a href="index">Home Page</a>
+        |
+        <a href="employees">Employees</a>
+        |
+        <a href="contracts">Contracts</a>
+        |
+        <a href="departments">Departments</a>
+        |
+        <a href="employee-contracts">Employee Contracts</a>
+        |
+        <a href="jobs">Jobs</a>
+        |
+        <a href="locations">Locations</a>
+        <hr>
+    </div>
+    <br />
+    <div class='main-table' id='locations-table'>
+        <h2>Locations Page</h2>
+        <table>
+            {% if data %}
+            <thead>
+                <tr>
+                <!-- Iterate through each key in the first entry to get the column name -->
+                {% for key in data[0].keys() %}
+
+                <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+                <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+
+                <!-- End of this for loop -->
+                {% endfor %} 
+                </tr>
+             </thead>
+             <tbody>
+                <tr>
+                <!-- Now, iterate through every item in data -->
+                {% for item in data %}
+                    <tr>
+                    <!-- Create a <td> element with the value of that key in it -->
+                {% for key in item.keys() %}
+                     <td> {{item[key]}} </td> 
+                {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+    </div>
+
+    <div id="add">
+        <!-- form to add a new Location-->
+        <form id="add_location" name="add_location" action="/locations" method="post">
+            <legend><strong> Add New Location</strong></legend>
+            <fieldset>
+                <label for='street_address'>Street Address: </label>
+                <input type='text' name='street_address' id='street_address' required />
+
+                <label for='city'>City: </label>
+                <input type='text' name='city' id='city' required />
+               
+                <label for='state'>State: </label>
+                <input type='text' name='state' id='state' required />
+
+                <label for='postal_code'>Postal Code: </label>
+                <input type='text' name='postal_code' id='postal_code' required />
+
+                <label for='country'>Country: </label>
+                <input type='text' name='country' id='country' required />
+
+            </fieldset>
+            <input type="submit" value="Create Location" name="add_location" id="add_location">
+        </form>
+</html>
+        

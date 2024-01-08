@@ -1,0 +1,70 @@
+<!--Citation for the following code: Date: 08/02/2023 Copied from /OR/ Adapted from /OR/ Based on: Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update A Contract Page</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.min.js"
+        integrity="sha512-6i4FxVh0YbXCtxtqrFlG0H6FJRO4YQ5fyFH0JBdAAiqCt6/Q+jHMabMSC8FpESVSJZvnQ52dB2A8OD9SMk7buw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.min.js"
+        integrity="sha512-I5GJQRKGdj2miDs8ComgARfiAQiZJo/43YasH22qtweoG+YRXLTDYegxC/vPgw/ERxRzww/F4l4+8UiMmI20sw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="index" />
+</head>
+<body>
+    <div>
+        <h2>Updating Contract<h2>
+        <table>
+            {% if data %}
+            <thead>
+                <tr>
+                <!-- Iterate through each key in the first entry to get the column name -->
+                {% for key in data[0].keys() %}
+
+                <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+                <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+
+                <!-- End of this for loop -->
+                {% endfor %} 
+                </tr>
+             </thead>
+             <tbody>
+                <tr>
+                <!-- Now, iterate through every item in data -->
+                {% for item in data %}
+                    <tr>
+                    <!-- Create a <td> element with the value of that key in it -->
+                {% for key in item.keys() %}
+                     <td> {{item[key]}} </td> 
+                {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+    </div>
+
+    <div id="edit">
+         <!-- form to edit a contract-->
+        <form id="Update_Contract" name="Update_Contract" action="/edit_contracts/{{data[0].ID}}" method="POST">
+            <legend><strong> Update A Contracct</strong></legend>
+            <fieldset>
+                <input type='hidden' value="{{data[0].ID}}" class="form-control" name='contract_id' id='contract_id' required />
+            
+                <label for='input-client-name'>Client Name:</label>
+                <input type='text' value="{{data[0]['Client Name']}}" name='client_name' id='client_name' required />
+           
+                <label for='input-contract-amount'>Contract Amount:</label>
+                <input type='text' value="{{data[0]['Contract Amount']}}" name='contract_amount' id='contract_amount' required />
+
+                
+            </fieldset>
+                <input type="submit"  value="Update Contract" name="Update_Contract" id="Update_Contract">
+        </form>
+
+</html>
